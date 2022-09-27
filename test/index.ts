@@ -1,8 +1,21 @@
-import { getDefaultPrinter, getPrinters, print } from "../dist";
-import { join } from "path";
+import { join } from "node:path";
+import {
+  getPrintersDecode,
+  getPaperSizeDecode,
+  getDefaultPrinterDecode,
+  print,
+} from "../dist";
 
-getDefaultPrinter().then(console.log)
+for (const iterator of getPrintersDecode())
+  console.log(iterator, getPaperSizeDecode(iterator.deviceId));
 
-getPrinters().then(console.log)
+let DefaultPrinter = getDefaultPrinterDecode()?.deviceId!;
 
-print(join(__dirname, 'mlmdflr.pdf'))
+let DefaultPrinterPaperSize = getPaperSizeDecode(DefaultPrinter)[0];
+
+console.log(DefaultPrinterPaperSize);
+
+print(join(__dirname, "mlmdflr.pdf"), {
+  printer: DefaultPrinter,
+  paperSize: DefaultPrinterPaperSize,
+});

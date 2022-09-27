@@ -1,8 +1,8 @@
 import path from "path";
 import fs from "fs";
-import execAsync from "../utils/exec-file-async";
 import fixPathForAsarUnpack from "../utils/electron-util";
 import throwIfUnsupportedOperatingSystem from "../utils/throw-if-unsupported-os";
+import { execSync } from "node:child_process";
 
 export interface PrintOptions {
   printer?: string;
@@ -24,22 +24,8 @@ const validSubsets = ["odd", "even"];
 const validOrientations = ["portrait", "landscape"];
 const validScales = ["noscale", "shrink", "fit"];
 const validSides = ["duplex", "duplexshort", "duplexlong", "simplex"];
-const validPaperSizes = [
-  "A2",
-  "A3",
-  "A4",
-  "A5",
-  "A6",
-  "letter",
-  "legal",
-  "tabloid",
-  "statement",
-];
 
-export default async function print(
-  pdf: string,
-  options: PrintOptions = {}
-): Promise<void> {
+export default function print(pdf: string, options: PrintOptions = {}): void {
   throwIfUnsupportedOperatingSystem();
   if (!pdf) throw "No PDF specified";
   if (!fs.existsSync(pdf)) throw "No such file";
@@ -56,7 +42,7 @@ export default async function print(
     args.push("-print-dialog");
   } else {
     if (printer) {
-      args.push("-print-to", printer);
+      args.push("-print-to", `"${printer}"`);
     } else {
       args.push("-print-to-default");
     }
@@ -64,8 +50,7 @@ export default async function print(
       args.push("-silent");
     }
   }
-
-  const printSettings = getPrintSettings(options);
+  let printSettings = getPrintSettings(options);
 
   if (printSettings.length) {
     args.push("-print-settings", printSettings.join(","));
@@ -74,7 +59,7 @@ export default async function print(
   args.push(pdf);
 
   try {
-    await execAsync(sumatraPdf, args);
+    execSync(`${sumatraPdf} ${args.join(" ")}`);
   } catch (error) {
     throw error;
   }
@@ -95,9 +80,7 @@ function getPrintSettings(options: PrintOptions): string[] {
 
   const printSettings = [];
 
-  if (pages) {
-    printSettings.push(pages);
-  }
+  pages && printSettings.push(pages);
 
   if (subset) {
     if (validSubsets.includes(subset)) {
@@ -139,23 +122,11 @@ function getPrintSettings(options: PrintOptions): string[] {
     }
   }
 
-  if (bin) {
-    printSettings.push(`bin=${bin}`);
-  }
+  bin && printSettings.push(`bin=${bin}`);
 
-  if (paperSize) {
-    if (validPaperSizes.includes(paperSize)) {
-      printSettings.push(`paper=${paperSize}`);
-    } else {
-      throw `Invalid paper size provided. Valid names: ${validPaperSizes.join(
-        ", "
-      )}`;
-    }
-  }
+  paperSize && printSettings.push(`paper=${paperSize}`);
 
-  if (copies) {
-    printSettings.push(`${copies}x`);
-  }
+  copies && printSettings.push(`${copies}x`);
 
   return printSettings;
 }

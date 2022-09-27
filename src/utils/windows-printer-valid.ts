@@ -14,10 +14,8 @@ export default function isValidPrinter(printer: string): {
 
     const lowerLabel = label.toLowerCase();
 
-    // @ts-ignore
     if (lowerLabel === "deviceid") printerData.deviceId = value;
 
-    // @ts-ignore
     if (lowerLabel === "name") printerData.name = value;
 
     return !!(printerData.deviceId && printerData.name);

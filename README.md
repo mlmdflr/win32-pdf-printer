@@ -1,28 +1,22 @@
 # Node.js PDF printing
 
-[![Build Status](https://api.cirrus-ci.com/github/artiebits/pdf-to-printer.svg)](https://cirrus-ci.com/github/artiebits/pdf-to-printer)
-[![codecov](https://codecov.io/gh/artiebits/pdf-to-printer/branch/master/graph/badge.svg)](https://codecov.io/gh/artiebits/pdf-to-printer)
-![npm](https://img.shields.io/npm/dw/pdf-to-printer)
-
 A utility to print PDF files from Node.js and Electron.
 
-- Supports label printers such as [Rollo](https://www.rolloprinter.com/)
-  and [Zebra](https://www.zebra.com/us/en/products/printers.html).
-- Works on Windows only.
+Enhancements in [`pdf-to-printer`](https://github.com/artiebits/pdf-to-printer) to support all printers and to handle some Chinese encoding
+
+- Supports all printers
+- Works on Windows only
 
 If you are looking for a utility that will work on **Unix-like operating systems**, then take a look
 at https://github.com/artiebits/unix-print.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [API](#api)
-  - [`.print(pdf[, options]) => Promise<void>`](#printpdf-options--promisevoid)
-  - [`.getPrinters() => Promise<Printer[]>`](#getprinters--promiseprinter)
-  - [`.getDefaultPrinter() => Promise<Printer | null>`](#getdefaultprinter--promiseprinter--null)
-- [Sponsor this project](#sponsor-this-project)
+  - [`.print(pdf[, options]) => void`](#printpdf-options--void)
+  - [`.getPrinters() => Printer[]`](#getprinters--printer)
+  - [`.getPaperSize(printer:string) => string[]`](#getpapersizeprinterstring--string)
+  - [`.getDefaultPrinter() => Printer | null`](#getdefaultprinter--printer--null)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -32,30 +26,24 @@ at https://github.com/artiebits/unix-print.
 Install using [`yarn`](https://yarnpkg.com/):
 
 ```bash
-yarn add pdf-to-printer
+yarn add win32-pdf-printer
 ```
 
 Or [`npm`](https://www.npmjs.com/):
 
 ```bash
-npm install --save pdf-to-printer
+npm install --save win32-pdf-printer
 ```
 
 ## Basic Usage
 
-Print a PDF file to the default printer:
-
-```javascript
-import { print } from "pdf-to-printer";
-
-print("assets/pdf-sample.pdf").then(console.log);
-```
+You can see the [test](https://github.com/mlmdflr/win32-pdf-printer/tree/main/test) folder for details
 
 ## API
 
 A function to print a PDF document.
 
-### `.print(pdf[, options]) => Promise<void>`
+### `.print(pdf[, options]) => void`
 
 **Arguments**
 
@@ -74,36 +62,32 @@ A function to print a PDF document.
    - `printDialog` (`boolean`, Optional): displays the Print dialog for all the files indicated on this command line.
    - `copies`(`number`, Optional): Specifies how many copies will be printed.
 
-**Returns**
-
-`Promise<void>`: a Promise that resolves with undefined.
-
 **Examples**
 
 To print a PDF file to the default printer:
 
 ```javascript
-import { print } from "pdf-to-printer";
+import { print } from "win32-pdf-printer";
 
-print("assets/pdf-sample.pdf").then(console.log);
+print("assets/pdf-sample.pdf");
 ```
 
 To print to a specific printer:
 
 ```javascript
-import { print } from "pdf-to-printer";
+import { print } from "win32-pdf-printer";
 
 const options = {
   printer: "Zebra",
 };
 
-print("assets/pdf-sample.pdf", options).then(console.log);
+print("assets/pdf-sample.pdf", options);
 ```
 
 Example with a few print settings. It will print pages 1, 3, 5 and scale them so that they fit into the printable area of the paper.
 
 ```javascript
-import { print } from "pdf-to-printer";
+import { print } from "win32-pdf-printer";
 
 const options = {
   printer: "Zebra",
@@ -111,46 +95,56 @@ const options = {
   scale: "fit",
 };
 
-print("assets/pdf-sample.pdf", options).then(console.log);
+print("assets/pdf-sample.pdf", options);
 ```
 
-### `.getPrinters() => Promise<Printer[]>`
+### `.getPrinters() => Printer[]`
 
 A function to get a list of available printers.
 
 **Returns**
 
-`Promise<Printer[]>`: a Promise that resolves with a list of available printers.
+`Printer[]`: a list of available printers.
 
 **Examples**
 
 ```javascript
-import { getPrinters } from "pdf-to-printer";
+import { getPrinters } from "win32-pdf-printer";
 
-getPrinters().then(console.log);
+console.log(getPrinters());
 ```
 
-### `.getDefaultPrinter() => Promise<Printer | null>`
+### `.getPaperSize(printer:string) => string[]`
+
+Get the set of paper sizes supported by the print driver
+
+**Returns**
+
+`string[]`: supported paperSizes.
+
+**Examples**
+
+```javascript
+import { getPaperSize, getDefaultPrinter } from "win32-pdf-printer";
+
+console.log(getPaperSize(getDefaultPrinter().name));
+```
+
+### `.getDefaultPrinter() => Printer | null`
 
 A function to get the default printer info.
 
 **Returns**
 
-`Promise<Printer | null>`: a Promise that resolves with the default printer info, or `null` if there is no default printer.
+`Printer | null`: the default printer info, or `null` if there is no default printer.
 
 **Examples**
 
 ```javascript
-import { getDefaultPrinter } from "pdf-to-printer";
+import { getDefaultPrinter } from "win32-pdf-printer";
 
-getDefaultPrinter().then(console.log);
+console.log(getDefaultPrinter());
 ```
-
-## Sponsor this project
-
-If you rely on this package, please consider supporting it:
-
-<a href="https://www.buymeacoffee.com/artiebits" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## License
 

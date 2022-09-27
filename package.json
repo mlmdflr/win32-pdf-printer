@@ -17,10 +17,11 @@
     "dist"
   ],
   "scripts": {
+    "b_publish": "npm run lint-build && cd dist && npm publish --registry registry.npmjs.org --access=public && cd ..",
     "test": "esno test/index.ts",
     "lint": "prettier --write \"**/*.{js,ts,json,md,yml}\"",
-    "build": "webpack --config webpack.config.js",
-    "prepare": "npm run lint && npm run build"
+    "build": "webpack --config webpack.config.js && esno build.ts",
+    "lint-build": "npm run lint && npm run build"
   },
   "devDependencies": {
     "@types/node": "^18.7.19",
@@ -40,5 +41,8 @@
     "node.js",
     "electron",
     "windows"
-  ]
+  ],
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
+  }
 }

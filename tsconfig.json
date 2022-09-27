@@ -15,22 +15,14 @@
     "listEmittedFiles": false,
     "listFiles": false,
     "pretty": true,
-    "lib": [
-      "ESNext"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "lib": ["ESNext"],
+    "typeRoots": ["node_modules/@types"],
     "module": "ESNext",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "outDir": "dist",
     "declaration": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
