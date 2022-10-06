@@ -2,9 +2,9 @@
 
 A utility to print PDF files from Node.js and Electron.
 
-Enhancements in [`pdf-to-printer`](https://github.com/artiebits/pdf-to-printer) to support all printers and to handle some Chinese encoding
+Enhancements in [`pdf-to-printer`](https://github.com/artiebits/pdf-to-printer) to support all printers and to handle some `Chinese encoding`
 
-- Supports all printers
+- `Supports all printers`
 - Works on Windows only
 
 If you are looking for a utility that will work on **Unix-like operating systems**, then take a look
