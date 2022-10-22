@@ -61,6 +61,7 @@ A function to print a PDF document.
    - `silent` (`boolean`, Optional): Silences SumatraPDF's error messages.
    - `printDialog` (`boolean`, Optional): displays the Print dialog for all the files indicated on this command line.
    - `copies`(`number`, Optional): Specifies how many copies will be printed.
+   - `sumatraPdfPath`(`string`, Optional): Specify the path manually.
 
 **Examples**
 
