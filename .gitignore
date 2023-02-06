@@ -4,3 +4,6 @@ dist
 .DS_Store
 yarn.lock
 .idea
+.vs
+bin
+obj
