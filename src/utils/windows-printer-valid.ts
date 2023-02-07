@@ -1,4 +1,4 @@
-import { Printer } from "../get-default-printer/get-default-printer";
+import { Printer } from "../types";
 
 export default function isValidPrinter(printer: string): {
   isValid: boolean;

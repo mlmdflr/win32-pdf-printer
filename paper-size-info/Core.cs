@@ -26,7 +26,7 @@ namespace paper_size_info
                 for (int i = 0; i < allPrinters.Count; i++)
                 {
                     sb.Append(JSONConst.JSON_OBJECT_PREFIX);
-                    sb.Append($@"""PaperName"":""{allPrinters[i]}""{JSONConst.JSON_SPLIT_SYMBOl}");
+                    sb.Append($@"""printerName"":""{allPrinters[i]}""{JSONConst.JSON_SPLIT_SYMBOl}");
                     printerSettings.PrinterName = allPrinters[i];
                     sb.Append($@"""PaperSizes"":{new PaperSizeOutputs(printerSettings.PaperSizes).GetOutStr()}");
                     sb.Append(JSONConst.JSON_OBJECT_SUFFIX);
@@ -38,7 +38,7 @@ namespace paper_size_info
             }
             if (!string.Empty.Equals(paperName)) printerSettings.PrinterName = paperName;
             sb.Append(JSONConst.JSON_OBJECT_PREFIX);
-            sb.Append($@"""PaperName"":""{paperName}""{JSONConst.JSON_SPLIT_SYMBOl}");
+            sb.Append($@"""printerName"":""{printerSettings.PrinterName}""{JSONConst.JSON_SPLIT_SYMBOl}");
             sb.Append($@"""PaperSizes"":{new PaperSizeOutputs(printerSettings.PaperSizes).GetOutStr()}");
             sb.Append(JSONConst.JSON_OBJECT_SUFFIX);
             Console.WriteLine(sb.ToString());

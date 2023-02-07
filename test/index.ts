@@ -6,6 +6,11 @@ import {
   print,
 } from "../dist";
 
+import { getPaperSizeInfoDecode, getPaperSizeInfoAllDecode } from "../dist";
+
+console.log(getPaperSizeInfoDecode());
+console.log(getPaperSizeInfoAllDecode());
+
 for (const iterator of getPrintersDecode())
   console.log(iterator, getPaperSizeDecode(iterator.deviceId));
 

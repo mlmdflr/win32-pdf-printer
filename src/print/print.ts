@@ -3,22 +3,7 @@ import fs from "fs";
 import fixPathForAsarUnpack from "../utils/electron-util";
 import throwIfUnsupportedOperatingSystem from "../utils/throw-if-unsupported-os";
 import { execSync } from "node:child_process";
-
-export interface PrintOptions {
-  printer?: string;
-  pages?: string;
-  subset?: string;
-  orientation?: string;
-  scale?: string;
-  monochrome?: boolean;
-  side?: string;
-  bin?: string;
-  paperSize?: string;
-  silent?: boolean;
-  printDialog?: boolean;
-  sumatraPdfPath?: string;
-  copies?: number;
-}
+import type { PrintOptions } from "../types";
 
 const validSubsets = ["odd", "even"];
 const validOrientations = ["portrait", "landscape"];

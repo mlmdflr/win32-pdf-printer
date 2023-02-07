@@ -1,8 +1,8 @@
 import { execSync } from "node:child_process";
 import isValidPrinter from "../utils/windows-printer-valid";
 import throwIfUnsupportedOperatingSystem from "../utils/throw-if-unsupported-os";
-import { Printer } from "../get-default-printer/get-default-printer";
 import { decode } from "iconv-lite";
+import type { Printer } from "../types";
 
 function stdoutHandler(stdout: Buffer, encoding: string | null = null) {
   const printers: Printer[] = [];

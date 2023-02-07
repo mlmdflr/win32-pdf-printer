@@ -2,11 +2,7 @@ import throwIfUnsupportedOperatingSystem from "../utils/throw-if-unsupported-os"
 import isValidPrinter from "../utils/windows-printer-valid";
 import { execSync } from "node:child_process";
 import { decode } from "iconv-lite";
-
-export interface Printer {
-  deviceId: string;
-  name: string;
-}
+import type { Printer } from "../types";
 
 function getDefaultPrinter(): Printer | null {
   try {

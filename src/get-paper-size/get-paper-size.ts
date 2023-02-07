@@ -1,5 +1,6 @@
 import { execSync } from "node:child_process";
 import { decode } from "iconv-lite";
+import throwIfUnsupportedOperatingSystem from "../utils/throw-if-unsupported-os";
 
 const RegBinPath =
   process.arch === "ia32" &&
@@ -12,6 +13,8 @@ const RegPrintersPath = `HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\
 const RegQueryParmeter = `printMediaSupported`;
 
 const getPaperSize = (printer: string) => {
+  throwIfUnsupportedOperatingSystem();
+
   const Parameter =
     `${RegBinPath}\\REG.exe ` +
     `QUERY "${RegPrintersPath}\\${printer}\\DsDriver" ` +
@@ -31,6 +34,8 @@ export const getPaperSizeDecode = (
   printer: string,
   encoding: string = "cp936"
 ) => {
+  throwIfUnsupportedOperatingSystem();
+
   const Parameter =
     `${RegBinPath}\\REG.exe ` +
     `QUERY "${RegPrintersPath}\\${printer}\\DsDriver" ` +
