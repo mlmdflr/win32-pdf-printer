@@ -1,6 +1,6 @@
 export interface Printer {
-  deviceId: string;
-  name: string;
+  DeviceID: string;
+  PrinterName: string;
 }
 
 export interface PrintOptions {
@@ -20,12 +20,15 @@ export interface PrintOptions {
 }
 
 export interface paperSizeInfoOptions {
-  printer?: string;
+  printer: string;
   paperSizeInfoPath?: string;
 }
 
 export interface PaperSizesInfoType {
-  printerName: string;
+  PrinterName: string;
+  TaskNumber: number;
+  Status: number;
+  StatusMsg: number;
   PaperSizes: PaperSizeType[];
 }
 

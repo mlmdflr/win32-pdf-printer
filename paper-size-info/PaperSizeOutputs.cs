@@ -37,7 +37,7 @@ namespace paper_size_info
             str.Append($@"
 ""Height"":{PaperSize.Height}{JSONConst.JSON_SPLIT_SYMBOl}
 ""Kind"":{(int)PaperSize.Kind}{JSONConst.JSON_SPLIT_SYMBOl}
-""PaperName"":""{PaperSize.PaperName}""{JSONConst.JSON_SPLIT_SYMBOl}
+""PaperName"":{JSONConst.ToLiteral(PaperSize.PaperName)}{JSONConst.JSON_SPLIT_SYMBOl}
 ""RawKind"":{PaperSize.RawKind}{JSONConst.JSON_SPLIT_SYMBOl}
 ""Width"":{PaperSize.Width}
 ");

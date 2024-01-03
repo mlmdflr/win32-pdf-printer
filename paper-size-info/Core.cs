@@ -9,12 +9,8 @@ namespace paper_size_info
 
         public static void CoreFun(params string[] args)
         {
-            var (help, all, paperName, cliRef) = new CliParameter(args);
-            if (help)
-            {
-                cliRef.Help();
-                return;
-            }
+            var (all, paperName, _) = new CliParameter(args);
+
             //reuse variable
             PrinterSettings printerSettings = new PrintDocument().PrinterSettings;
 
@@ -26,7 +22,11 @@ namespace paper_size_info
                 for (int i = 0; i < allPrinters.Count; i++)
                 {
                     sb.Append(JSONConst.JSON_OBJECT_PREFIX);
-                    sb.Append($@"""printerName"":""{allPrinters[i]}""{JSONConst.JSON_SPLIT_SYMBOl}");
+                    sb.Append($@"""PrinterName"":{JSONConst.ToLiteral(allPrinters[i])}{JSONConst.JSON_SPLIT_SYMBOl}");
+                    sb.Append($@"""TaskNumber"":{TaskNumber.GetTaskNumber(allPrinters[i])}{JSONConst.JSON_SPLIT_SYMBOl}");
+                    int status = Status.GetPrinterStatusInt(allPrinters[i]);
+                    sb.Append($@"""Status"":{status}{JSONConst.JSON_SPLIT_SYMBOl}");
+                    sb.Append($@"""StatusMsg"":{Status.GetPrinterStatus(status)}{JSONConst.JSON_SPLIT_SYMBOl}");
                     printerSettings.PrinterName = allPrinters[i];
                     sb.Append($@"""PaperSizes"":{new PaperSizeOutputs(printerSettings.PaperSizes).GetOutStr()}");
                     sb.Append(JSONConst.JSON_OBJECT_SUFFIX);
@@ -37,11 +37,31 @@ namespace paper_size_info
                 return;
             }
             if (!string.Empty.Equals(paperName)) printerSettings.PrinterName = paperName;
-            sb.Append(JSONConst.JSON_OBJECT_PREFIX);
-            sb.Append($@"""printerName"":""{printerSettings.PrinterName}""{JSONConst.JSON_SPLIT_SYMBOl}");
-            sb.Append($@"""PaperSizes"":{new PaperSizeOutputs(printerSettings.PaperSizes).GetOutStr()}");
-            sb.Append(JSONConst.JSON_OBJECT_SUFFIX);
+            if (!string.Empty.Equals(printerSettings.PrinterName) && Exists(printerSettings.PrinterName))
+            {
+                sb.Append(JSONConst.JSON_OBJECT_PREFIX);
+                sb.Append($@"""PrinterName"":{JSONConst.ToLiteral(printerSettings.PrinterName)}{JSONConst.JSON_SPLIT_SYMBOl}");
+                sb.Append($@"""TaskNumber"":{TaskNumber.GetTaskNumber(printerSettings.PrinterName)}{JSONConst.JSON_SPLIT_SYMBOl}");
+                int status = Status.GetPrinterStatusInt(printerSettings.PrinterName);
+                sb.Append($@"""Status"":{status}{JSONConst.JSON_SPLIT_SYMBOl}");
+                sb.Append($@"""StatusMsg"":{Status.GetPrinterStatus(status)}{JSONConst.JSON_SPLIT_SYMBOl}");
+                sb.Append($@"""PaperSizes"":{new PaperSizeOutputs(printerSettings.PaperSizes).GetOutStr()}");
+                sb.Append(JSONConst.JSON_OBJECT_SUFFIX);
+            }
             Console.WriteLine(sb.ToString());
+        }
+
+        private static bool Exists(string printerName)
+        {
+            var allPrinters = PrinterSettings.InstalledPrinters;
+            for (int i = 0; i < allPrinters.Count; i++)
+            {
+                if (allPrinters[i] == printerName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

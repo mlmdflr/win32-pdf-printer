@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33110.190
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paper-size-info", "paper-size-info.csproj", "{BC161488-5CD0-4C9A-A3F4-76ACCDFFF43B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "printers", "..\printers\printers.csproj", "{4A6ECBA6-C797-44D3-9CE9-857E21E923D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BC161488-5CD0-4C9A-A3F4-76ACCDFFF43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC161488-5CD0-4C9A-A3F4-76ACCDFFF43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC161488-5CD0-4C9A-A3F4-76ACCDFFF43B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A6ECBA6-C797-44D3-9CE9-857E21E923D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A6ECBA6-C797-44D3-9CE9-857E21E923D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A6ECBA6-C797-44D3-9CE9-857E21E923D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A6ECBA6-C797-44D3-9CE9-857E21E923D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,10 @@
-﻿namespace paper_size_info
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace printers
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {

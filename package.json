@@ -1,7 +1,7 @@
 {
   "name": "win32-pdf-printer",
-  "version": "2.0.2",
-  "description": "A utility to print PDF files from Node.js and Electron",
+  "version": "4.0.1",
+  "description": "A simple and powerful printing library for node and elctron environments.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,13 +11,9 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "b_publish": "npm run lint-build && cd dist && npm publish --registry registry.npmjs.org --access=public && cd ..",
     "test": "esno test/index.ts",
     "lint": "prettier --write \"**/*.{js,ts,json,md,yml}\"",
     "build": "webpack --config webpack.config.js",
@@ -41,8 +37,5 @@
     "node.js",
     "electron",
     "windows"
-  ],
-  "dependencies": {
-    "iconv-lite": "^0.6.3"
-  }
+  ]
 }

@@ -1,3 +1,4 @@
+//This print api uses SumatraPDF and will comply with gplv3.
 import path from "path";
 import fs from "fs";
 import fixPathForAsarUnpack from "../utils/electron-util";
@@ -41,7 +42,7 @@ export default function print(pdf: string, options: PrintOptions = {}): void {
     args.push("-print-settings", printSettings.join(","));
   }
 
-  args.push(pdf);
+  args.push(`"${pdf}"`);
 
   try {
     execSync(`${sumatraPdf} ${args.join(" ")}`);
@@ -109,7 +110,7 @@ function getPrintSettings(options: PrintOptions): string[] {
 
   bin && printSettings.push(`bin=${bin}`);
 
-  paperSize && printSettings.push(`paper=${paperSize}`);
+  paperSize && printSettings.push(`paper="${paperSize}"`);
 
   copies && printSettings.push(`${copies}x`);
 

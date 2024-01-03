@@ -1,55 +1,17 @@
 import { execSync } from "node:child_process";
-import isValidPrinter from "../utils/windows-printer-valid";
 import throwIfUnsupportedOperatingSystem from "../utils/throw-if-unsupported-os";
-import { decode } from "iconv-lite";
 import type { Printer } from "../types";
+import fixPathForAsarUnpack from "../utils/electron-util";
+import path from "node:path";
 
-function stdoutHandler(stdout: Buffer, encoding: string | null = null) {
-  const printers: Printer[] = [];
-  if (!encoding) {
-    stdout
-      .toString()
-      .split(/(\r?\n){2,}/)
-      .map((printer) => printer.trim())
-      .filter((printer) => !!printer)
-      .forEach((printer) => {
-        const { isValid, printerData } = isValidPrinter(printer);
-        if (!isValid) return;
-        printers.push(printerData);
-      });
-  } else {
-    decode(stdout, encoding)
-      .split(/(\r?\n){2,}/)
-      .map((printer) => printer.trim())
-      .filter((printer) => !!printer)
-      .forEach((printer) => {
-        const { isValid, printerData } = isValidPrinter(printer);
-        if (!isValid) return;
-        printers.push(printerData);
-      });
-  }
-  return printers;
-}
-
-function getPrinters(): Printer[] {
+function getPrinters(paperSizeInfoPath?: string): Printer[] {
   try {
     throwIfUnsupportedOperatingSystem();
-    const stdout = execSync(
-      "Powershell.exe -Command Get-CimInstance Win32_Printer -Property DeviceID,Name"
-    );
-    return stdoutHandler(stdout);
-  } catch (error) {
-    throw error;
-  }
-}
-
-export function getPrintersDecode(encoding: string = "cp936"): Printer[] {
-  try {
-    throwIfUnsupportedOperatingSystem();
-    const stdout = execSync(
-      "Powershell.exe -Command Get-CimInstance Win32_Printer -Property DeviceID,Name"
-    );
-    return stdoutHandler(stdout, encoding);
+    let Printer =
+      paperSizeInfoPath || path.join(__dirname, "paper-size-info.exe");
+    if (!paperSizeInfoPath) Printer = fixPathForAsarUnpack(Printer);
+    const Parameter = `${Printer}`;
+    return JSON.parse(execSync(Parameter).toString());
   } catch (error) {
     throw error;
   }

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace paper_size_info
+namespace printers
 {
     internal class JSONConst
     {
