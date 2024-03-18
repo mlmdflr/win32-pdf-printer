@@ -23,6 +23,7 @@ npm add win32-pdf-printer
 import { join } from "node:path";
 import {
   print,
+  print2,
   getPaperSizeInfoAll,
   getPaperSizeInfo,
   getDefaultPrinter,
@@ -49,6 +50,8 @@ print(join(__dirname, "mlmdflr.pdf"), {
   printer: DefaultPrinterName,
   paperSize: DefaultPrinterPaperSizeInfo?.PaperSizes[0].PaperName,
 });
+
+print2(join(__dirname, "mlmdflr.pdf"),DefaultPrinterName);
 
 ```
 

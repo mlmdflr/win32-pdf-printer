@@ -1,6 +1,6 @@
 {
   "name": "win32-pdf-printer",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "A simple and powerful printing library for node and elctron environments.",
   "license": "MIT",
   "repository": {
